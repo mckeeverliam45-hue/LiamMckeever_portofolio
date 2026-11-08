@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="robots" content="noindex, nofollow" />
+    <title>Admin Dashboard | Liam Mckeever</title>
+    <link rel="icon" type="image/svg+xml" href="../assets/liam-mark.svg" />
+    <link rel="stylesheet" href="styles.css" />
+    <script src="../js/admin.js" defer></script>
+  </head>
+  <body class="admin-body">
+    <main class="admin-auth" id="loginPanel">
+      <a class="admin-login-brand" href="index.html">
+        <img src="../assets/liam-mark.svg" alt="" />
+        <span>Liam Mckeever <small>Portfolio admin</small></span>
+      </a>
+      <section class="admin-auth-card" aria-labelledby="loginTitle">
+        <p class="mini-label">Secure access</p>
+        <h1 id="loginTitle">Admin sign in</h1>
+        <p class="auth-description">Sign in to manage portfolio content and contact messages.</p>
+        <form id="loginForm">
+          <label for="username">Username</label>
+          <input id="username" name="username" type="text" autocomplete="username" maxlength="50" required />
+          <label for="password">Password</label>
+          <input id="password" name="password" type="password" autocomplete="current-password" required />
+          <button class="primary-btn auth-submit" type="submit">Sign in</button>
+          <p class="admin-notice" id="loginStatus" role="status" aria-live="polite"></p>
+        </form>
+        <p class="auth-setup-note">Need an admin account? Follow the <a href="../backend/README.md" target="_blank" rel="noopener noreferrer">admin setup instructions</a>.</p>
+        <a class="back-to-site" href="index.html">← Back to portfolio</a>
+      </section>
+    </main>
+
+    <div class="admin-shell" id="dashboard" hidden>
+      <aside class="admin-sidebar">
+        <a class="admin-brand" href="index.html">
+          <img src="../assets/liam-mark.svg" alt="" />
+          <span>
+            <strong>Liam Mckeever</strong>
+            <small>Admin Portal</small>
+          </span>
+        </a>
+
+        <nav class="admin-nav" aria-label="Admin navigation">
+          <a href="#overview">Overview</a>
+          <a href="#messages">Messages</a>
+          <a href="#projects">Projects</a>
+          <a href="#education">Education</a>
+          <a href="#skills">Skills</a>
+        </nav>
+
+        <a href="index.html" class="sidebar-site-link">View public portfolio</a>
+      </aside>
+
+      <main class="admin-main">
+        <header class="admin-topbar" id="overview">
+          <div>
+            <p class="mini-label">Portfolio management</p>
+            <h1>Dashboard</h1>
+          </div>
+          <button class="ghost-btn" id="logoutButton" type="button">Sign out</button>
+        </header>
+
+        <p class="admin-notice" id="dashboardStatus" role="status" aria-live="polite"></p>
+
+        <section class="stats-grid" aria-label="Portfolio summary">
+          <article class="summary-card"><p>Contact messages</p><h2 id="messageCount">—</h2></article>
+          <article class="summary-card"><p>Projects</p><h2 id="projectCount">—</h2></article>
+          <article class="summary-card"><p>Education records</p><h2 id="educationCount">—</h2></article>
+          <article class="summary-card"><p>Skills</p><h2 id="skillCount">—</h2></article>
+        </section>
+
+        <section class="panel admin-panel" id="messages">
+          <div class="panel-header">
+            <div><p class="mini-label">Inbox</p><h2>Contact messages</h2></div>
+            <button class="ghost-btn small" id="refreshButton" type="button">Refresh</button>
+          </div>
+          <div class="table-wrap">
+            <table>
+              <thead><tr><th>Received</th><th>Name</th><th>Email</th><th>Subject / message</th><th>Action</th></tr></thead>
+              <tbody id="messagesTable"><tr><td colspan="5">Loading messages…</td></tr></tbody>
+            </table>
+          </div>
+        </section>
+
+        <section class="admin-management-grid">
+          <section class="panel admin-panel" id="projects">
+            <div class="panel-header">
+              <div><p class="mini-label">Public portfolio</p><h2>Projects</h2></div>
+              <button class="ghost-btn small" data-reset-form="projectForm" type="button">New project</button>
+            </div>
+            <form class="admin-record-form" id="projectForm">
+              <input type="hidden" name="id" />
+              <label>Project title<input name="title" maxlength="150" required /></label>
+              <label>Description<textarea name="description" rows="3" required></textarea></label>
+              <label>Project URL (optional)<input name="project_url" type="url" maxlength="255" placeholder="https://" /></label>
+              <label>Image URL or path (optional)<input name="image" maxlength="255" placeholder="../images/project.jpg" /></label>
+              <div class="form-actions"><button class="primary-btn" type="submit">Save project</button><button class="ghost-btn" data-reset-form="projectForm" type="button">Cancel</button></div>
+            </form>
+            <div class="record-list" id="projectsList" aria-live="polite"></div>
+          </section>
+
+          <section class="panel admin-panel" id="education">
+            <div class="panel-header">
+              <div><p class="mini-label">Public portfolio</p><h2>Education</h2></div>
+              <button class="ghost-btn small" data-reset-form="educationForm" type="button">Add record</button>
+            </div>
+            <form class="admin-record-form" id="educationForm">
+              <input type="hidden" name="id" />
+              <label>Institution<input name="institution" maxlength="150" required /></label>
+              <label>Qualification<input name="qualification" maxlength="150" required /></label>
+              <div class="year-fields">
+                <label>Start year<input name="start_year" type="number" min="1901" max="2155" /></label>
+                <label>End year<input name="end_year" type="number" min="1901" max="2155" /></label>
+              </div>
+              <label>Description<textarea name="description" rows="3"></textarea></label>
+              <div class="form-actions"><button class="primary-btn" type="submit">Save education</button><button class="ghost-btn" data-reset-form="educationForm" type="button">Cancel</button></div>
+            </form>
+            <div class="record-list" id="educationList" aria-live="polite"></div>
+          </section>
+        </section>
+        <section class="panel admin-panel" id="skills">
+          <div class="panel-header">
+            <div><p class="mini-label">Public portfolio</p><h2>Skills &amp; Focus Areas</h2></div>
+            <button class="ghost-btn small" data-reset-form="skillForm" type="button">Add skill</button>
+          </div>
+          <form class="admin-record-form" id="skillForm">
+            <input type="hidden" name="id" />
+            <label>Skill name<input name="name" maxlength="150" required /></label>
+            <label>Category<input name="category" maxlength="100" placeholder="Development, IT Support, Creative…" required /></label>
+            <label>Description<textarea name="description" rows="3" maxlength="5000" required></textarea></label>
+            <div class="form-actions"><button class="primary-btn" type="submit">Save skill</button><button class="ghost-btn" data-reset-form="skillForm" type="button">Cancel</button></div>
+          </form>
+          <div class="record-list" id="skillsList" aria-live="polite"></div>
+        </section>
+        <footer class="admin-footer"><a href="index.html">Back to public portfolio</a></footer>
+      </main>
+    </div>
+  </body>
+</html>

@@ -1,0 +1,49 @@
+
+
+document.addEventListener("DOMContentLoaded", function () {
+
+    const contactForm = document.getElementById("contactForm");
+    const formStatus = document.getElementById("formStatus");
+
+    if (!contactForm || !formStatus) {
+        return;
+    }
+
+    contactForm.addEventListener("submit", function (event) {
+
+        event.preventDefault();
+
+        const name = document.getElementById("name").value.trim();
+        const email = document.getElementById("email").value.trim();
+        const subject = document.getElementById("subject").value.trim();
+        const message = document.getElementById("message").value.trim();
+
+        if (!name || !email || !subject || !message) {
+            formStatus.textContent = "Please fill in all fields.";
+            return;
+        }
+
+        
+        const recipient = "mckeeverlia45@gmail.com";
+
+        const emailSubject = encodeURIComponent(subject);
+
+        const emailBody = encodeURIComponent(
+            "Name: " + name + "\n" +
+            "Email: " + email + "\n\n" +
+            "Message:\n" + message
+        );
+
+        const mailtoLink =
+            "mailto:" + recipient +
+            "?subject=" + emailSubject +
+            "&body=" + emailBody;
+
+        formStatus.textContent =
+            "Opening your email application. Please send the prepared message.";
+
+        window.location.href = mailtoLink;
+
+    });
+
+});
